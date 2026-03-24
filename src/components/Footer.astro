@@ -1,0 +1,23 @@
+---
+const today = new Date();
+---
+
+<footer>
+	<p>&copy; {today.getFullYear()} Supplement Hero.</p>
+	<p class="note">All articles and messaging are placeholders until real supplement research is published.</p>
+</footer>
+<style>
+	footer {
+		padding: 2em 1em 6em 1em;
+		background: linear-gradient(var(--gray-gradient)) no-repeat;
+		color: rgb(var(--gray));
+		text-align: center;
+	}
+	footer p {
+		margin: 0.35rem 0;
+	}
+	.note {
+		max-width: 36rem;
+		margin: 0.5rem auto 0;
+	}
+</style>

@@ -1,0 +1,39 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Evidence-first supplement content, coming soon.</h1>
+			<p>
+				Supplement Hero is now set up as an Astro blog and ready for real research-backed content.
+				Everything currently published is placeholder copy used to prove the repo, routes, and content
+				pipeline are working.
+			</p>
+			<p>
+				The current structure supports a homepage, an about page, a blog index, RSS, sitemap generation,
+				and Markdown or MDX posts inside <code>src/content/blog/</code>.
+			</p>
+			<p>Recommended next steps:</p>
+			<ul>
+				<li>Replace the placeholder posts with real supplement research and editorial copy</li>
+				<li>Update the site URL in <code>astro.config.mjs</code> before deployment</li>
+				<li>Swap placeholder images and branding for production assets</li>
+				<li>Expand the about page with the real editorial standard and methodology</li>
+			</ul>
+			<p>
+				Use the <a href="/blog">blog index</a> to review the current placeholder entries.
+			</p>
+		</main>
+		<Footer />
+	</body>
+</html>
