@@ -1,8 +1,15 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getPublishDate, getPublishedPosts, getScheduledPosts } from '../lib/blog';
+
+const posts = await getPublishedPosts();
+const latestPosts = posts.slice(0, 3);
+const scheduledPosts = await getScheduledPosts();
+const nextScheduledPost = scheduledPosts.at(-1);
 ---
 
 <!doctype html>
@@ -13,26 +20,41 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<body>
 		<Header />
 		<main>
-			<h1>Evidence-first supplement content, coming soon.</h1>
+			<h1>Research-backed supplement explainers for cautious readers.</h1>
 			<p>
-				Supplement Hero is now set up as an Astro blog and ready for real research-backed content.
-				Everything currently published is placeholder copy used to prove the repo, routes, and content
-				pipeline are working.
+				Supplement Hero publishes plain-language briefings about supplements, evidence quality, and
+				decision-making pitfalls. The site now ships only approved posts whose scheduled publish time
+				has passed at build time.
 			</p>
 			<p>
-				The current structure supports a homepage, an about page, a blog index, RSS, sitemap generation,
-				and Markdown or MDX posts inside <code>src/content/blog/</code>.
+				The Astro content collection supports an approval gate plus scheduled publishing via
+				<code>publishAt</code>. An hourly scheduler can rebuild the site so approved posts land
+				without manual intervention.
 			</p>
-			<p>Recommended next steps:</p>
-			<ul>
-				<li>Replace the placeholder posts with real supplement research and editorial copy</li>
-				<li>Update the site URL in <code>astro.config.mjs</code> before deployment</li>
-				<li>Swap placeholder images and branding for production assets</li>
-				<li>Expand the about page with the real editorial standard and methodology</li>
-			</ul>
-			<p>
-				Use the <a href="/blog">blog index</a> to review the current placeholder entries.
-			</p>
+			<p>Published posts today: {posts.length}</p>
+			{
+				nextScheduledPost && (
+					<p>
+						Next approved post in queue: <strong>{nextScheduledPost.data.title}</strong> on{' '}
+						<FormattedDate date={getPublishDate(nextScheduledPost)} />.
+					</p>
+				)
+			}
+			<section>
+				<h2>Latest posts</h2>
+				<ul>
+					{
+						latestPosts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+								<span> · </span>
+								<FormattedDate date={getPublishDate(post)} />
+							</li>
+						))
+					}
+				</ul>
+			</section>
+			<p>Browse the full <a href="/blog">blog archive</a> or subscribe to the RSS feed.</p>
 		</main>
 		<Footer />
 	</body>

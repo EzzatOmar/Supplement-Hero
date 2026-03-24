@@ -3,4 +3,4 @@
 
 export const SITE_TITLE = 'Supplement Hero';
 export const SITE_DESCRIPTION =
-	'Placeholder supplement research blog scaffold built with Astro.';
+	'Research-backed supplement explainers with approval-gated, scheduled publishing.';

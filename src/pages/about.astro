@@ -5,21 +5,22 @@ import Layout from '../layouts/BlogPost.astro';
 
 <Layout
 	title="About Supplement Hero"
-	description="Placeholder information about the publication and its editorial process."
+	description="How Supplement Hero handles plain-language supplement coverage and scheduled publishing."
 	pubDate={new Date('March 24 2026')}
 	heroImage={AboutHeroImage}
 >
 	<p>
-		Supplement Hero is planned as a consumer-facing publication that translates supplement research
-		into plain-language guidance.
+		Supplement Hero is a consumer-facing publication that translates supplement research into
+		plain-language guidance for readers who want more signal and less hype.
 	</p>
 	<p>
-		This page is still placeholder content. Replace it once the team has a final point of view on
-		editorial standards, sourcing policy, medical disclaimers, author bios, and review workflow.
+		Each article moves through editorial review before it is marked approved in the content
+		frontmatter. Astro pages, RSS, and individual post routes only expose entries whose publish time
+		has passed, which lets the team queue posts ahead of time.
 	</p>
 	<p>
-		Until then, treat the current site as a technical scaffold only: layout, routing, content
-		collections, RSS, and basic branding are in place, but the publication is not ready for factual
-		claims or reader trust.
+		The goal is not to make treatment decisions for readers. The publication explains evidence
+		strength, common marketing tactics, uncertainty, and the kinds of questions a reader should take
+		back to a clinician when stakes are high.
 	</p>
 </Layout>
