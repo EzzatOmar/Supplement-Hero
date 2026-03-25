@@ -4,6 +4,11 @@
 #
 name: Deploy Astro site to Pages
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  BUILD_PATH: "." # default value when not using subfolders
+  # BUILD_PATH: subfolder
+
 on:
   # Runs on pushes targeting the default branch
   push:
@@ -23,10 +28,6 @@ permissions:
 concurrency:
   group: "pages"
   cancel-in-progress: false
-
-env:
-  BUILD_PATH: "." # default value when not using subfolders
-  # BUILD_PATH: subfolder
 
 jobs:
   build:
