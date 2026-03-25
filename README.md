@@ -2,7 +2,7 @@
 
 This repository contains the Astro site for Supplement Hero.
 
-The blog now supports approval-gated publishing and a simple hourly scheduler path so approved posts can go live without manual edits.
+The blog now supports approval-gated publishing and a hardened hourly GitHub Pages deployment path so approved posts can go live without manual edits.
 
 ## Important
 
@@ -34,7 +34,7 @@ Run these from the project root:
 
 ## Hourly publishing
 
-`.github/workflows/hourly-publish.yml` deploys the Astro build to GitHub Pages on pushes to `main`, on manual runs, and every hour so approved scheduled posts can go live without a code change.
+`.github/workflows/hourly-publish.yml` is the only Pages deployment workflow in the repo. It deploys the Astro build to GitHub Pages on pushes to `main`, on manual runs, and every hour so approved scheduled posts can go live without a code change.
 
 This is the intended flow:
 
@@ -42,6 +42,20 @@ This is the intended flow:
 2. Set `isApproved: true`
 3. Set `publishAt` to the target timestamp
 4. Let the next hourly GitHub Pages deployment rebuild the site
+
+## Queue visibility
+
+- The homepage shows the next approved post in queue plus up to five queued posts
+- The queue is derived from `getScheduledPosts()` in `src/lib/blog.ts`
+- Scheduled posts are ordered by the next publish time first so the visible queue matches the actual release order
+
+## Operational checks
+
+- Confirm there is only one Pages deployment workflow: `.github/workflows/hourly-publish.yml`
+- Validate current output: `pnpm build`
+- Validate a future queue window locally:
+  `BLOG_PUBLISH_NOW=2026-03-24T09:00:00Z pnpm build`
+- After a content change lands on `main`, GitHub Actions will deploy immediately and then continue the hourly queue cadence
 
 ## GitHub Pages
 

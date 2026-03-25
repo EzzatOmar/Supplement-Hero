@@ -30,6 +30,10 @@ export function sortPostsByPublishDate(posts: BlogPost[]) {
 	return posts.sort((a, b) => getPublishDate(b).valueOf() - getPublishDate(a).valueOf());
 }
 
+export function sortPostsByPublishDateAscending(posts: BlogPost[]) {
+	return posts.sort((a, b) => getPublishDate(a).valueOf() - getPublishDate(b).valueOf());
+}
+
 export async function getPublishedPosts(now = getBuildNow()) {
 	const posts = await getCollection('blog');
 	return sortPostsByPublishDate(posts.filter((post) => isPublishedPost(post, now)));
@@ -37,7 +41,7 @@ export async function getPublishedPosts(now = getBuildNow()) {
 
 export async function getScheduledPosts(now = getBuildNow()) {
 	const posts = await getCollection('blog');
-	return sortPostsByPublishDate(
+	return sortPostsByPublishDateAscending(
 		posts.filter(
 			(post) => post.data.isApproved && getPublishDate(post).valueOf() > now.valueOf(),
 		),
