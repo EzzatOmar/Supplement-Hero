@@ -5,11 +5,13 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import { getPublishDate, getPublishedPosts, getScheduledPosts } from '../lib/blog';
+import { withBase } from '../lib/urls';
 
 const posts = await getPublishedPosts();
 const latestPosts = posts.slice(0, 3);
 const scheduledPosts = await getScheduledPosts();
-const nextScheduledPost = scheduledPosts.at(-1);
+const nextScheduledPost = scheduledPosts[0];
+const queuedPosts = scheduledPosts.slice(0, 5);
 ---
 
 <!doctype html>
@@ -40,13 +42,35 @@ const nextScheduledPost = scheduledPosts.at(-1);
 					</p>
 				)
 			}
+			{
+				scheduledPosts.length > 0 && (
+					<section>
+						<h2>Publishing queue</h2>
+						<p>
+							{scheduledPosts.length} approved {scheduledPosts.length === 1 ? 'post is' : 'posts are'} queued for
+							upcoming hourly builds.
+						</p>
+						<ul>
+							{
+								queuedPosts.map((post) => (
+									<li>
+										<a href={withBase(`/blog/${post.id}/`)}>{post.data.title}</a>
+										<span> · </span>
+										<FormattedDate date={getPublishDate(post)} />
+									</li>
+								))
+							}
+						</ul>
+					</section>
+				)
+			}
 			<section>
 				<h2>Latest posts</h2>
 				<ul>
 					{
 						latestPosts.map((post) => (
 							<li>
-								<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+								<a href={withBase(`/blog/${post.id}/`)}>{post.data.title}</a>
 								<span> · </span>
 								<FormattedDate date={getPublishDate(post)} />
 							</li>
@@ -54,7 +78,7 @@ const nextScheduledPost = scheduledPosts.at(-1);
 					}
 				</ul>
 			</section>
-			<p>Browse the full <a href="/blog">blog archive</a> or subscribe to the RSS feed.</p>
+			<p>Browse the full <a href={withBase('/blog')}>blog archive</a> or subscribe to the RSS feed.</p>
 		</main>
 		<Footer />
 	</body>
